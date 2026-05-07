@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>CENTIPEDE — Arcade Rétro-Futuriste</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0e27'/%3E%3Ccircle cx='16' cy='8' r='5' fill='%23ff006e'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23ff3a55'/%3E%3Ccircle cx='16' cy='23' r='3.5' fill='%23ff6b35'/%3E%3Ccircle cx='16' cy='29' r='2.5' fill='%23ff8c35'/%3E%3Ccircle cx='13' cy='7' r='1.5' fill='white'/%3E%3Ccircle cx='19' cy='7' r='1.5' fill='white'/%3E%3Ccircle cx='13.5' cy='7.5' r='.7' fill='%23000'/%3E%3Ccircle cx='19.5' cy='7.5' r='.7' fill='%23000'/%3E%3Cline x1='10' y1='9' x2='6' y2='7' stroke='%23ff006e' stroke-width='1.5'/%3E%3Cline x1='22' y1='9' x2='26' y2='7' stroke='%23ff006e' stroke-width='1.5'/%3E%3Cline x1='10' y1='17' x2='6' y2='15' stroke='%23ff6b35' stroke-width='1.2'/%3E%3Cline x1='22' y1='17' x2='26' y2='15' stroke='%23ff6b35' stroke-width='1.2'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ===== MENU PRINCIPAL ===== -->
+  <div id="screen-menu" class="screen active">
+    <div class="menu-bg"></div>
+    <div class="scan-lines"></div>
+    <div class="menu-content">
+      <div class="title-block">
+        <div class="title-sub">ARCADE CLASSICS</div>
+        <h1 class="game-title">CENTIPEDE</h1>
+        <div class="title-decoration">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="score-display">
+        <div class="score-item">
+          <span class="label">HIGH SCORE</span>
+          <span class="value" id="menu-best-score">00000</span>
+        </div>
+      </div>
+
+      <nav class="menu-nav">
+        <button class="menu-btn primary" id="btn-start">▶ START GAME</button>
+        <button class="menu-btn" id="btn-how-to-play">? HOW TO PLAY</button>
+        <button class="menu-btn" id="btn-settings">⚙ SETTINGS</button>
+      </nav>
+
+      <div class="menu-footer">
+        <span class="blink-text">INSERT COIN</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HOW TO PLAY ===== -->
+  <div id="screen-howto" class="screen">
+    <div class="scan-lines"></div>
+    <div class="overlay-panel">
+      <h2 class="panel-title">HOW TO PLAY</h2>
+      <div class="howto-grid">
+        <div class="howto-section">
+          <h3>⌨️ CONTROLS</h3>
+          <p><kbd>↑↓←→</kbd> or <kbd>ZQSD</kbd> — Move</p>
+          <p><kbd>SPACE</kbd> — Shoot</p>
+          <p><kbd>P</kbd> — Pause</p>
+        </div>
+        <div class="howto-section">
+          <h3>🎯 SCORING</h3>
+          <p>Centipede segment: <span class="cyan">+10 pts</span></p>
+          <p>Mushroom destroyed: <span class="cyan">+5 pts</span></p>
+          <p>Full centipede killed: <span class="gold">+100 bonus</span></p>
+          <p>Scorpion: <span class="gold">+20 pts</span></p>
+        </div>
+        <div class="howto-section">
+          <h3>🍄 MUSHROOMS</h3>
+          <p>Block centipede path</p>
+          <p>Shoot them to destroy</p>
+          <p>Poisoned ones = instant kill</p>
+          <p>Golden ones = +50 pts bonus</p>
+        </div>
+        <div class="howto-section">
+          <h3>⚡ POWER-UPS</h3>
+          <p>🔥 Rapid Fire — 3 shots/click</p>
+          <p>🛡️ Shield — absorbs 1 hit</p>
+          <p>⭐ Double Points</p>
+          <p>❤️ Extra Life</p>
+          <p>🐌 Slow Time</p>
+          <p>💣 Bomb — kills all!</p>
+        </div>
+      </div>
+      <button class="menu-btn primary" id="btn-howto-back">← BACK</button>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS ===== -->
+  <div id="screen-settings" class="screen">
+    <div class="scan-lines"></div>
+    <div class="overlay-panel">
+      <h2 class="panel-title">SETTINGS</h2>
+      <div class="settings-list">
+        <div class="setting-row">
+          <span>Sound FX</span>
+          <button class="toggle-btn" id="toggle-sfx" data-on="ON" data-off="OFF">ON</button>
+        </div>
+        <div class="setting-row">
+          <span>Music</span>
+          <button class="toggle-btn" id="toggle-music" data-on="ON" data-off="OFF">ON</button>
+        </div>
+        <div class="setting-row">
+          <span>Scan Lines</span>
+          <button class="toggle-btn" id="toggle-scanlines" data-on="ON" data-off="OFF">ON</button>
+        </div>
+        <div class="setting-row">
+          <span>Screen Shake</span>
+          <button class="toggle-btn" id="toggle-shake" data-on="ON" data-off="OFF">ON</button>
+        </div>
+        <div class="setting-row">
+          <span>Theme</span>
+          <button class="toggle-btn" id="toggle-theme">NEON</button>
+        </div>
+      </div>
+      <button class="menu-btn" id="btn-reset-score">🗑 RESET HIGH SCORE</button>
+      <button class="menu-btn primary" id="btn-settings-back">← BACK</button>
+    </div>
+  </div>
+
+  <!-- ===== JEU ===== -->
+  <div id="screen-game" class="screen">
+    <div class="scan-lines" id="game-scanlines"></div>
+
+    <!-- HUD TOP -->
+    <div id="hud-top">
+      <div id="hud-score-block">
+        <span class="hud-label">SCORE</span>
+        <span class="hud-value" id="hud-score">0</span>
+      </div>
+      <div id="hud-center-block">
+        <span class="hud-label">LEVEL</span>
+        <span class="hud-value" id="hud-level">1</span>
+      </div>
+      <div id="hud-best-block">
+        <span class="hud-label">BEST</span>
+        <span class="hud-value" id="hud-best">0</span>
+      </div>
+    </div>
+
+    <!-- CANVAS -->
+    <div id="canvas-wrapper">
+      <canvas id="game-canvas"></canvas>
+    </div>
+
+    <!-- HUD BOTTOM -->
+    <div id="hud-bottom">
+      <div id="hud-lives">
+        <span class="hud-label">LIVES</span>
+        <span id="lives-icons">❤️❤️❤️</span>
+      </div>
+      <div id="hud-combo" class="hidden">
+        <span id="combo-display">COMBO x1</span>
+      </div>
+      <div id="hud-powerup" class="hidden">
+        <span id="powerup-display"></span>
+      </div>
+      <button id="btn-pause" title="Pause">⏸</button>
+    </div>
+
+    <!-- MOBILE D-PAD -->
+    <div id="mobile-controls">
+      <div id="dpad">
+        <button class="dpad-btn" id="btn-up">▲</button>
+        <div class="dpad-row">
+          <button class="dpad-btn" id="btn-left">◀</button>
+          <div class="dpad-center"></div>
+          <button class="dpad-btn" id="btn-right">▶</button>
+        </div>
+        <button class="dpad-btn" id="btn-down">▼</button>
+      </div>
+      <button id="btn-fire">🔥<br>FIRE</button>
+    </div>
+  </div>
+
+  <!-- ===== PAUSE ===== -->
+  <div id="screen-pause" class="screen overlay-screen">
+    <div class="overlay-panel compact">
+      <h2 class="panel-title">PAUSED</h2>
+      <button class="menu-btn primary" id="btn-resume">▶ RESUME</button>
+      <button class="menu-btn" id="btn-restart-level">↺ RESTART LEVEL</button>
+      <button class="menu-btn" id="btn-pause-menu">⌂ MAIN MENU</button>
+    </div>
+  </div>
+
+  <!-- ===== LEVEL COMPLETE ===== -->
+  <div id="screen-level" class="screen overlay-screen">
+    <div class="overlay-panel compact">
+      <div class="level-complete-text">LEVEL COMPLETE!</div>
+      <div class="level-stats">
+        <div>Score: <span id="lc-score" class="cyan">0</span></div>
+        <div>Segments killed: <span id="lc-segments" class="cyan">0</span></div>
+      </div>
+      <div class="level-next-label">GET READY FOR</div>
+      <div class="level-next-num" id="lc-next-level">LEVEL 2</div>
+    </div>
+  </div>
+
+  <!-- ===== GAME OVER ===== -->
+  <div id="screen-gameover" class="screen overlay-screen">
+    <div class="overlay-panel">
+      <h2 class="panel-title red">GAME OVER</h2>
+      <div id="new-record-badge" class="hidden">🏆 NEW RECORD!</div>
+      <div class="final-stats">
+        <div class="stat-row">
+          <span>YOUR SCORE</span>
+          <span class="cyan" id="go-score">0</span>
+        </div>
+        <div class="stat-row">
+          <span>BEST SCORE</span>
+          <span class="gold" id="go-best">0</span>
+        </div>
+        <div class="stat-row">
+          <span>LEVEL REACHED</span>
+          <span class="cyan" id="go-level">1</span>
+        </div>
+        <div class="stat-row">
+          <span>SEGMENTS KILLED</span>
+          <span class="cyan" id="go-segments">0</span>
+        </div>
+        <div class="stat-row">
+          <span>MUSHROOMS DESTROYED</span>
+          <span class="cyan" id="go-mushrooms">0</span>
+        </div>
+        <div class="stat-row">
+          <span>POWERUPS COLLECTED</span>
+          <span class="cyan" id="go-powerups">0</span>
+        </div>
+      </div>
+      <button class="menu-btn primary" id="btn-retry">↺ RETRY</button>
+      <button class="menu-btn" id="btn-go-menu">⌂ MAIN MENU</button>
+    </div>
+  </div>
+
+  <!-- Scripts JS -->
+  <script src="js/audio.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/mushrooms.js"></script>
+  <script src="js/projectiles.js"></script>
+  <script src="js/centipede.js"></script>
+  <script src="js/enemies.js"></script>
+  <script src="js/powerups.js"></script>
+  <script src="js/collision.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

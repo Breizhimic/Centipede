@@ -1,0 +1,223 @@
+/* ========================================
+   CENTIPEDE — RESPONSIVE / MEDIA QUERIES
+   ======================================== */
+
+/* ---- TABLET ---- */
+@media (max-width: 768px) {
+  .game-title {
+    font-size: clamp(2rem, 12vw, 3.5rem);
+  }
+
+  .menu-content {
+    gap: 1.25rem;
+    padding: 1rem;
+  }
+
+  .menu-btn {
+    font-size: 0.55rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .howto-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .overlay-panel {
+    padding: 1.25rem;
+  }
+
+  #hud-top {
+    padding: 0.4rem 0.75rem;
+    height: 44px;
+  }
+  .hud-value {
+    font-size: 0.7rem;
+  }
+  .hud-label {
+    font-size: 0.32rem;
+  }
+
+  #hud-bottom {
+    height: 40px;
+    padding: 0.3rem 0.75rem;
+  }
+  #lives-icons {
+    font-size: 0.7rem;
+  }
+}
+
+/* ---- MOBILE (touch) ---- */
+@media (max-width: 480px) and (pointer: coarse) {
+  #mobile-controls {
+    display: flex !important;
+  }
+
+  /* Shrink canvas area to account for controls overlay */
+  #canvas-wrapper {
+    margin-bottom: 160px;
+  }
+
+  #hud-bottom {
+    display: none; /* replaced by mobile controls */
+  }
+
+  /* Make pause btn accessible on touch */
+  #btn-pause {
+    position: fixed;
+    top: 55px;
+    right: 0.5rem;
+    z-index: 200;
+    font-size: 1.2rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .game-title {
+    font-size: clamp(1.8rem, 14vw, 2.5rem);
+  }
+
+  .menu-content {
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+
+  .menu-nav {
+    max-width: 280px;
+  }
+
+  .menu-btn {
+    font-size: 0.5rem;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .score-display .value {
+    font-size: 1.2rem;
+  }
+
+  .overlay-panel {
+    padding: 1rem;
+  }
+
+  .panel-title {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat-row {
+    font-size: 0.38rem;
+  }
+
+  .howto-section p {
+    font-size: 0.38rem;
+  }
+  .howto-section h3 {
+    font-size: 0.45rem;
+  }
+
+  kbd {
+    font-size: 0.32rem;
+  }
+
+  #hud-top {
+    height: 38px;
+  }
+  .hud-value {
+    font-size: 0.6rem;
+  }
+}
+
+/* ---- TALL / PORTRAIT MOBILE ---- */
+@media (max-width: 480px) and (orientation: portrait) {
+  #screen-game {
+    justify-content: flex-start;
+  }
+}
+
+/* ---- WIDE / LANDSCAPE MOBILE ---- */
+@media (max-height: 500px) and (pointer: coarse) {
+  #mobile-controls {
+    padding: 0.3rem;
+  }
+  .dpad-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  .dpad-center {
+    width: 40px;
+    height: 40px;
+  }
+  #btn-fire {
+    width: 65px;
+    height: 65px;
+    font-size: 0.38rem;
+  }
+  #canvas-wrapper {
+    margin-bottom: 120px;
+  }
+  .menu-content {
+    gap: 0.75rem;
+  }
+  .game-title {
+    font-size: clamp(1.4rem, 10vw, 2rem);
+  }
+}
+
+/* ---- DESKTOP LARGE ---- */
+@media (min-width: 1200px) {
+  .game-title {
+    font-size: 5.5rem;
+  }
+  .menu-nav {
+    max-width: 360px;
+  }
+  .menu-btn {
+    font-size: 0.7rem;
+    padding: 1rem 2rem;
+  }
+}
+
+/* ---- FORCE LANDSCAPE ON SMALL DEVICES ---- */
+@media (max-width: 480px) and (orientation: portrait) and (pointer: coarse) {
+  .landscape-hint {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: #000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    color: #00d4ff;
+    text-align: center;
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+/* ---- SCROLLBAR STYLE ---- */
+.overlay-panel::-webkit-scrollbar {
+  width: 4px;
+}
+.overlay-panel::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.3);
+}
+.overlay-panel::-webkit-scrollbar-thumb {
+  background: var(--mush-cyan);
+  border-radius: 2px;
+}
+
+/* ---- SAFE AREA (iPhone notch) ---- */
+@supports (padding: max(0px)) {
+  #hud-top {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  #mobile-controls {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
+  }
+}
